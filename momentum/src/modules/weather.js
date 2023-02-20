@@ -14,14 +14,15 @@ export async function getWeather(city, onSuccess, onError) {
         });
       }
 
-      if (json.cod == 400 || json.cod == 404) {
+      let errorMessage = 'Error! ';
 
-        let errorMessage = 'Error! ' + json.message;
-
-        if (json.cod == 404) {
-          errorMessage += ` for "${city}"`;
-        }
+      if (json.cod == 400) {
+        errorMessage += json.message + " ' '";
+        onError({errorMessage});
+      } else if (json.cod == 404) {
+        errorMessage += json.message +` for "${city}"`;
         onError({errorMessage});
       }
-    })
+      
+      })
 };
