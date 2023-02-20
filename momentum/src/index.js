@@ -1,15 +1,22 @@
 import './index.html';
 import './index.css';
-import { startTimer } from "./modules/time.js";
-import { getTimeOfDay } from "./modules/greeting.js"
-import { setUserName, getUserName } from './modules/storage.js';
+import { startTimer } from "./modules/time";
+import { getTimeOfDay } from "./modules/greeting"
+import {
+  setUserName,
+  getUserName,
+  setCity,
+  getCity,
+  deleteCity,
+} from './modules/storage';
 import {
   loadRandomBackground,
   loadNextBackground,
   loadPrevBackground,
 } from './modules/background';
 import quotes from './assets/content/quotes.json';
-import { getQuotes } from './modules/quotes.js';
+import { getQuotes } from './modules/quotes';
+import { getWeather } from './modules/weather';
 
 document.addEventListener('DOMContentLoaded', function () {
   const time = document.querySelector('.time');
@@ -40,5 +47,65 @@ document.addEventListener('DOMContentLoaded', function () {
 
   getQuotes(quote, author, quotes);
   changeQuote.addEventListener('click', () => getQuotes(quote, author, quotes));
+
+  const cityInput = document.querySelector('.city');
+  const weatherIcon = document.querySelector('.weather-icon');
+  const temperature = document.querySelector('.temperature');
+  const weatherDescription = document.querySelector('.weather-description');
+  const wind = document.querySelector('.wind');
+  const humidityElement = document.querySelector('.humidity');
+  const weatherError = document.querySelector('.weather-error');
+
+  let city = getCity();
+
+  if (!city) {
+    city = 'Minsk';
+    setCity(city);
+  }
+
+  cityInput.value = city;
+
+  getWeather(city, onSuccess, onError);
+
+  function onSuccess({
+    id,
+    temp,
+    description,
+    speed,
+    humidity,
+  }) {
+    weatherError.textContent = '';
+    weatherIcon.className = 'weather-icon owf';
+    weatherIcon.classList.add(`owf-${id}`);
+    temperature.textContent = `${temp}°C`;
+    weatherDescription.textContent = description;
+    wind.textContent = `Wind speed: ${speed} m/s`;
+    humidityElement.textContent = `Humidity: ${humidity}%`;
+    weatherError.textContent = ''; //??? 
+  }
+
+  function onError({errorMessage }) {
+    weatherIcon.className = 'weather-icon owf';
+    temperature.textContent = '';
+    weatherDescription.textContent = '';
+    wind.textContent = '';
+    humidityElement.textContent = '';
+    deleteCity();
+    weatherError.textContent = errorMessage;
+  }
+
+  function onCityKeypress(event) {
+    if (event.code !== 'Enter') {
+      return;
+    }
+
+    const cityValue = cityInput.value;
+
+    setCity(cityValue);
+    getWeather(cityValue, onSuccess, onError);
+    cityInput.blur();
+  }
+
+  cityInput.addEventListener('keypress', (event) => onCityKeypress(event));
 
 });

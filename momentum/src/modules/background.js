@@ -4,7 +4,6 @@ import { getRandomNum } from './helper.js';
 let currentImage = getRandomNum(21, 1);
 
 const loadBackground = (onLoadCallback) => {
-  console.log(currentImage);
   const img = new Image();
   const timeOfDay = getTimeOfDay();
   const backgroundImageNum = currentImage.toString().padStart(2, "0");
