@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 
 const mode = process.env.NODE_ENV || 'development';
 const devMode = mode === 'development';
@@ -15,15 +16,19 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    filename: '[name].[contenthash].js'
+    filename: '[name].js'
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src', 'index.html')
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css'
-    })
+      filename: '[name].css'
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: './src/assets/sounds', to: './assets/sounds' }],
+    }),
   ],
   module: {
     rules: [
@@ -66,6 +71,13 @@ module.exports = {
         type: 'asset/resource',
         generator: {
           filename: 'assets/[name].[ext]'
+        }
+      },
+      {
+        test: /\.mp3$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/sounds/[name].[ext]'
         }
       },
     ]
