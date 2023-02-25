@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="assets/favicon.ico" rel="shortcut icon" />
   <title>momentum</title>
 </head>
+
 <body>
   <header class="header">
     <div class="player">
@@ -14,15 +16,31 @@
         <button class="play player-icon"></button>
         <button class="play-next player-icon"></button>
       </div>
+      <div class="current-audio-title">Aqua Caelestis</div>
+      <div class="current-audio-control">
+        <div class="timeline">
+          <div class="progress"></div>
+        </div>
+        <div class="volume-container">
+          <div class="volume-icon">
+            <div class="volume"></div>
+          </div>
+          <div class="volume-slider">
+            <div class="volume-percent"></div>
+          </div>
+        </div>
+      </div>
+        <div class="current-audio-data">
+          <div class="current-time">00:00</div>
+          <div class="duration">00:00</div>
+        </div>
+       
+     
       <ul class="play-list">
-        <!-- <li class ="play-item" src="./assets/sounds/Aqua Caelestis.mp3"> Aqua Caelestis</li>
-        <li class ="play-item" src="./assets/sounds/Ennio Morricone.mp3" > Ennio Morricone</li>
-        <li class ="play-item"> <audio src="./assets/sounds/River Flows In You.mp3" ></audio>River Flows In You</li>
-        <li class ="play-item"> <audio src="./assets/sounds/Summer Wind.mp3" ></audio>Summer Wind.mp3</li> -->
       </ul>
     </div>
     <div class="weather">
-      <input type="text" class="city" placeholder="[Enter city]"/>
+      <input type="text" class="city" placeholder="[Enter city]" />
       <i class="weather-icon owf"></i>
       <div class="weather-error"></div>
       <div class="description-container">
@@ -53,4 +71,5 @@
     </div>
   </footer>
 </body>
+
 </html>

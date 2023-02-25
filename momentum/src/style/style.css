@@ -1,7 +1,8 @@
 @font-face {
   font-family: 'Arial-MT';
-  src: url("../assets/fonts/Arial-MT.woff"); /* Путь к файлу со шрифтом */
- }
+  src: url("../assets/fonts/Arial-MT.woff");
+  /* Путь к файлу со шрифтом */
+}
 
 * {
   box-sizing: border-box;
@@ -27,19 +28,98 @@ body {
   align-items: flex-start;
   width: 100%;
   height: 30vh;
-  min-height: 220px;  
+  min-height: 220px;
   padding: 20px;
 }
 
 .player-controls {
   display: flex;
   align-items: center;
+  justify-content: space-around;
+  width: 130px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.current-audio-title {
+  padding-left: 15px;
+  width: 150px;
+  transition: 0.25s;
+}
+
+.current-audio-control {
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timeline {
+  overflow: hidden;
+  background-color: rgba(247, 244, 244, 0.5);
+  width: 170px;
+  cursor: pointer;
+  border-radius: 10px;
+  height: 10px;
+}
+
+.progress {
+  background: #fff;
+  width: 0%;
+  transition: 0.25s;
+  max-width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.current-audio-data {
+  width: 170px;
+  height: 20px;
+  display: flex;
   justify-content: space-between;
-  width: 120px;
-  margin-bottom: 28px;
+  align-items: center;
+  padding: 0px 5px;
+  transition: 0.25s;
+}
+
+.volume-container {
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+
+}
+
+.volume {
+  transform: scale(0.7);
+}
+
+.volume-slider {
+  position: absolute;
+  left: 3px;
+  bottom: 5px;
+  width: 0px;
+  background-color: rgba(247, 244, 244, 0.5);
+  transition: 0.25s;
+  margin-left: 30px;
+  border-radius: 2px;
+  height: 10px;
+  overflow: hidden;
+  transition: 0.25s;
+}
+
+ .volume-percent {
+  background: #fff;
+  height: 100%;
+  width: 75%;
+}
+
+.volume-container:hover .volume-slider {
+  left: 3px;
+  width: 100px;
 }
 
 .play-list {
+  margin-top: 20px;
   text-align: left;
 }
 
@@ -58,7 +138,7 @@ body {
 }
 
 .play-item::before {
-  content: "\2713";  
+  content: "\2713";
   position: absolute;
   left: 0;
   top: 2px;
@@ -71,7 +151,8 @@ body {
 
 .player-icon,
 .slider-icon,
-.change-quote {
+.change-quote,
+.volume-icon {
   width: 32px;
   height: 32px;
   background-size: 32px 32px;
@@ -82,20 +163,29 @@ body {
   outline: 0;
   opacity: .8;
   cursor: pointer;
-  transition: .3s;  
+  transition: .3s;
+}
+
+.volume-icon {
+  width: 20px;
+  height: 20px;
+  background-size: 20px 20px;
+  margin-left: 10px;
 }
 
 .player-icon:hover,
 .slider-icon:hover,
-.change-quote:hover {
+.change-quote:hover,
+.volume-icon:hover {
   opacity: 1;
 }
 
 .player-icon:active,
 .slider-icon:active,
-.change-quote:active {
+.change-quote:active,
+.volume-icon:active {
   border: 0;
-  outline: 0;  
+  outline: 0;
   transform: scale(1.1);
 }
 
@@ -118,6 +208,14 @@ body {
   background-image: url("../assets/svg/play-next.svg");
 }
 
+.volume-icon{
+  background-image: url("../assets/svg/volume-on.svg");
+}
+
+.volume-off{
+  background-image: url("../assets/svg/volume-off.svg");
+}
+
 .weather {
   display: flex;
   flex-direction: column;
@@ -125,7 +223,7 @@ body {
   align-items: flex-start;
   row-gap: 5px;
   width: 180px;
-  min-height: 180px;  
+  min-height: 180px;
   text-align: left;
 }
 
@@ -151,14 +249,14 @@ body {
   padding: 5px;
   font-size: 20px;
   line-height: 24px;
-  color: #fff;  
+  color: #fff;
   border: 0;
   outline: 0;
   border-bottom: 1px solid #fff;
   background-color: transparent;
 }
 
-.city::placeholder {  
+.city::placeholder {
   font-size: 20px;
   color: #fff;
   opacity: .6;
@@ -172,7 +270,7 @@ body {
   align-items: center;
   width: 100%;
   height: 40vh;
-  min-height: 260px;  
+  min-height: 260px;
   padding: 20px;
 }
 
@@ -198,7 +296,7 @@ body {
   margin-bottom: 10px;
   font-family: 'Arial-MT';
   font-size: 100px;
-  letter-spacing: -4px;  
+  letter-spacing: -4px;
 }
 
 .date {
@@ -218,7 +316,7 @@ body {
 }
 
 .greeting {
-  flex: 1;  
+  flex: 1;
   padding: 10px;
   text-align: right;
 }
@@ -247,13 +345,13 @@ body {
   align-items: center;
   width: 100%;
   height: 30vh;
-  min-height: 160px;  
+  min-height: 160px;
   padding: 20px;
 }
 
 .change-quote {
   margin-bottom: 30px;
-  background-image: url("../assets/svg/reload.svg");  
+  background-image: url("../assets/svg/reload.svg");
 }
 
 .quote {
@@ -267,7 +365,7 @@ body {
 @media (max-width: 768px) {
   .time {
     min-height: 80px;
-    font-size: 72px;    
+    font-size: 72px;
   }
 
   .greeting-container {

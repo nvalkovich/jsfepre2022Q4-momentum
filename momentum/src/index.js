@@ -17,8 +17,19 @@ import {
 import quotes from './assets/content/quotes.json';
 import { getQuotes } from './modules/quotes';
 import { getWeather } from './modules/weather';
-import { playAudio, playNext, playPrev, addAudioEndedEventListener } from './modules/audio';
+import { 
+  playAudio,
+  playNext,
+  playPrev,
+  addAudioEndedEventListener,
+  updateProgressAudioEventListener,
+  setProgressEventListener,
+  setVolume,
+  toggleVolume,
+  // toggleVolumeEventListener
+} from './modules/player';
 import playListItems from './modules/playList';
+import {getMinutesFromSeconds} from './modules/helper';
 
 const initTimeAndDate = () => {
   const time = document.querySelector('.time');
@@ -125,7 +136,17 @@ const initAudioPlayer = () => {
   const btnPlayPrev = document.querySelector('.play-prev');
   const btnPlayNext = document.querySelector('.play-next');
   const playList = document.querySelector('.play-list');
-
+  const currentAudio = document.querySelector('.current-audio-title');
+  const timeline = document.querySelector('.timeline');
+  const timelineWidth = timeline.offsetWidth;
+  const progress = document.querySelector('.progress');
+  const currentTimeBlock = document.querySelector('.current-time');
+  const durationBlock = document.querySelector('.duration');
+  const volumeButton =  document.querySelector('.volume-icon');
+  const volumeSlider = document.querySelector(".volume-slider");
+  const volumePersentage = document.querySelector(".volume-percent");
+  let newVolume;
+  
   let ocum = "";
   playListItems.forEach(item => {
     ocum += `<li class ="play-item"> ${item.title}</li>`;
@@ -148,28 +169,75 @@ const initAudioPlayer = () => {
       playItems[i].classList.remove('item-active');
      } else {
       playItems[i].classList.add('item-active');
+      currentAudio.innerHTML = playItems[i].innerHTML;
      }
     }
   };
 
-  const updateElements = ({ isPlay, audioIndex }) => {
+  const updateProgressAudio = (time, duration) => {
+    let persent = time / duration * 100;
+    if (persent > 100) {persent = 100};
+    progress.style.width = `${persent}%`;
+    durationBlock.textContent = getMinutesFromSeconds(duration);
+    currentTimeBlock.textContent = getMinutesFromSeconds(time);
+  }
+
+  const updateAudioElements = ({isPlay, audioIndex}) => {
     toActivePlayItem(audioIndex);
     togglePlay(isPlay);
   };
 
+  const setProgress = (e, audio, duration) => {
+    const clickX = e.offsetX;
+    audio.currentTime = (clickX / timelineWidth ) * duration;
+  }
+
+  volumeSlider.addEventListener('click', (e) => {
+    const sliderWidth = volumeSlider.offsetWidth;
+    newVolume = (e.offsetX / parseInt(sliderWidth));
+    setVolume(newVolume);
+    renderVolume(newVolume);
+    if(newVolume <= 0) {
+      volumeButton.classList.add('volume-off');
+     } else {
+      volumeButton.classList.remove ('volume-off');
+     }
+  });
+
+  const renderVolume = (volume) => {
+    console.log(volume);
+    volumePersentage.style.width = volume * 100 + '%';
+  }
+
+  const toggleVolumeButton = () => {
+    const newVolume = toggleVolume();
+    if(newVolume){
+      volumeButton.classList.remove ('volume-off');
+    } else {
+      volumeButton.classList.add('volume-off');
+    }
+    renderVolume(newVolume);
+  }
+
   btnPlayPrev.addEventListener('click', () => {
-    updateElements(playPrev());
+    updateAudioElements(playPrev());
   });
 
   btnPlayAudio.addEventListener('click', () => {
-    updateElements(playAudio());
+    updateAudioElements(playAudio());
   });
 
   btnPlayNext.addEventListener('click', () => {
-    updateElements(playNext());
+    updateAudioElements(playNext());
   });
 
-  addAudioEndedEventListener(updateElements);
+  addAudioEndedEventListener(updateAudioElements);
+  updateProgressAudioEventListener(updateProgressAudio);
+  setProgressEventListener(timeline, setProgress);
+  
+  volumeButton.addEventListener('click', () => {
+    toggleVolumeButton();
+  });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
