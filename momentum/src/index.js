@@ -8,6 +8,8 @@ import {
   setCity,
   getCity,
   deleteCity,
+  setImageSource,
+  getImageSource,
 } from './modules/storage';
 import {
   loadRandomBackground,
@@ -26,7 +28,6 @@ import {
   setProgressEventListener,
   setVolume,
   toggleVolume,
-  // toggleVolumeEventListener
 } from './modules/player';
 import playListItems from './modules/playList';
 import {getMinutesFromSeconds} from './modules/helper';
@@ -240,6 +241,33 @@ const initAudioPlayer = () => {
   });
 }
 
+const initSettings = () => {
+  const settingsButton = document.querySelector('.settings');
+  const settings = document.querySelector('.settings-list');
+  const saveChangesButton = document.querySelector('.save-changes');
+  const sourceOptions = document.getElementsByName('sourse');
+  
+  const getInputRadioValue = (options) => {
+    let value;
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].checked) {
+        value  = `${options[i].value}`;
+      }
+    }
+    return value;
+  }
+
+  saveChangesButton.addEventListener('click', () => {
+    setImageSource(getInputRadioValue(sourceOptions));
+    window.location.reload();
+  })
+
+  settingsButton.addEventListener('click', () => {
+    settings.classList.toggle('settings-hidden');
+  })
+
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   initTimeAndDate();
   initGreeting();
@@ -247,5 +275,6 @@ document.addEventListener('DOMContentLoaded', function () {
   initQuotes();
   initWeather();
   initAudioPlayer();
+  initSettings();
 });
 
