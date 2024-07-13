@@ -1,0 +1,11 @@
+1. [Deploy](https://nvalkovich-momentum.netlify.app/)
+2. Screenshot:
+![image](https://user-images.githubusercontent.com/105563182/221443396-d541690d-47ab-4ac3-9253-9c7fcce97b5f.png)
+  - [x] Clock and calendar (15/15)
+  - [x] Greeting (10/10) 
+  - [x] Changing background image(20/20) 
+  - [x] Weather widget (15/15) 
+  - [x] Quote of the day widget (10/10) 
+  - [x] Audio player (15 /15) 
+  - [x] Advanced audio player (20/20) 
+  - [x] Getting background image from API (10/10) 
