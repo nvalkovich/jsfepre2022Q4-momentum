@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="assets/favicon.ico" rel="shortcut icon" />
+  <title>momentum</title>
+</head>
+
+<body>
+  <header class="header">
+    <div class="player">
+      <div class="player-controls">
+        <button class="play-prev player-icon"></button>
+        <button class="play player-icon"></button>
+        <button class="play-next player-icon"></button>
+      </div>
+      <div class="current-audio-title">Aqua Caelestis</div>
+      <div class="current-audio-control">
+        <div class="timeline">
+          <div class="progress"></div>
+        </div>
+        <div class="volume-container">
+          <div class="volume-icon">
+            <div class="volume"></div>
+          </div>
+          <div class="volume-slider">
+            <div class="volume-percent"></div>
+          </div>
+        </div>
+      </div>
+        <div class="current-audio-data">
+          <div class="current-time">00:00</div>
+          <div class="duration">00:00</div>
+        </div>
+       
+     
+      <ul class="play-list">
+      </ul>
+    </div>
+    <div class="weather">
+      <input type="text" class="city" placeholder="[Enter city]" />
+      <i class="weather-icon owf"></i>
+      <div class="weather-error"></div>
+      <div class="description-container">
+        <span class="temperature"></span>
+        <span class="weather-description"></span>
+      </div>
+      <div class="wind"></div>
+      <div class="humidity"></div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="slider-icons">
+      <button class="slide-prev slider-icon"></button>
+      <button class="slide-next slider-icon"></button>
+    </div>
+    <time class="time"></time>
+    <date class="date"></date>
+    <div class="greeting-container">
+      <span class="greeting"></span>
+      <input type="text" class="name" placeholder="[Enter name]" />
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="todo-list"></div>
+    <div class="quote-container">
+      <button class="change-quote"></button>
+      <div>
+        <div class="quote"></div>
+        <div class="author"></div>
+      </div>
+    </div>
+    <div class="settings-container">
+      <div class="settings">
+      </div>
+      <div class="settings-list settings-hidden ">
+        <div class="img-sourse-options">
+          <h4>Image sourse:</h4>
+          <input name="sourse" type="radio" value="gitHub">GitHub<br>
+          <input name="sourse" type="radio" value="unsplash">Unsplash API<br>
+          <input name="sourse" type="radio" value="flickr">Flickr API<br>
+        </div>
+        <button class="save-changes">Save changes</button>
+      </div>
+      </footer>
+         </html>
